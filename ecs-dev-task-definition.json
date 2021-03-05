@@ -2,6 +2,7 @@
     "status": "ACTIVE",
     "family": "test-reaction-identity",
     "placementConstraints": [],
+    "executionRoleArn": "arn:aws:iam::662460439248:role/ecsTaskExecutionRole",
     "requiresAttributes": [
         {
             "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
