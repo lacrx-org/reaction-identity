@@ -1,0 +1,101 @@
+{
+    "status": "ACTIVE",
+    "family": "test-reaction-identity",
+    "placementConstraints": [],
+    "requiresAttributes": [
+        {
+            "name": "com.amazonaws.ecs.capability.logging-driver.awslogs"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.ecr-auth"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.19"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.17"
+        },
+        {
+            "name": "com.amazonaws.ecs.capability.docker-remote-api.1.21"
+        }
+    ],
+    "compatibilities": [
+        "EC2"
+    ],
+    "volumes": [],
+    "requiresCompatibilities": [
+        "EC2"
+    ],
+    "containerDefinitions": [
+        {
+            "memoryReservation": 1024,
+            "environment": [
+                {
+                    "name": "API_URL",
+                    "value": "https://api-test.lacrx.com/graphql"
+                },
+                {
+                    "name": "HYDRA_ADMIN_URL",
+                    "value": "http://internal-test-hydra-admin-lb-1150266455.us-west-2.elb.amazonaws.com:4445"
+                },
+                {
+                    "name": "PORT",
+                    "value": "4100"
+                },
+                {
+                    "name": "ROOT_URL",
+                    "value": "https://identity-test.lacrx.com"
+                },
+                {
+                    "name": "HYDRA_TOKEN_URL",
+                    "value": "https://auth-test.lacrx.com/oauth2/token"
+                },
+                {
+                    "name": "OAUTH2_CLIENT_DOMAINS",
+                    "value": "https://storefront-test.lacrx.com"
+                },
+                {
+                    "name": "PUBLIC_STOREFRONT_HOME_URL",
+                    "value": "https://storefront-test.lacrx.com"
+                }
+            ],
+            "secrets": [
+                {
+                    "name": "MONGO_URL",
+                    "valueFrom": "arn:aws:secretsmanager:us-west-2:662460439248:secret:test/MONGO_URL-ksuGt3"
+                },
+                {
+                    "name": "MONGO_OPLOG_URL",
+                    "valueFrom": "arn:aws:secretsmanager:us-west-2:662460439248:secret:test/MONGO_OPLOG_URL-d6JCSB"
+                }
+            ],
+            "name": "test-reaction-identity",
+            "workingDirectory": "/usr/local/src/app",
+            "mountPoints": [],
+            "image": "662460439248.dkr.ecr.us-west-2.amazonaws.com/lamps-identity:trunk",
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-region": "us-west-2",
+                    "awslogs-stream-prefix": "ecs",
+                    "awslogs-group": "/ecs/test-reaction-identity"
+                }
+            },
+            "cpu": 0,
+            "portMappings": [
+                {
+                    "protocol": "tcp",
+                    "containerPort": 4100,
+                    "hostPort": 0
+                }
+            ],
+            "command": [
+                "node",
+                "main.js"
+            ],
+            "essential": true,
+            "volumesFrom": []
+        }
+    ],
+    "revision": 1
+}
